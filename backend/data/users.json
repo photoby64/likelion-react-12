@@ -22,5 +22,11 @@
     "name": "아이폰",
     "email": "apple@gmail.com",
     "password": "$2b$09$SUdo8ddsK5eOFSneQdgxFOM9wKnPsWJgLTvzXtPJnIch9hAg40kwC"
+  },
+  {
+    "id": "4c446e28-a0ff-47ef-ba08-5309a485035e",
+    "name": "이승협",
+    "email": "lee@naver.com",
+    "password": "$2b$09$fyLuXbfy5b/y67wBKdUYFOPzqCdq2QRjCaVJaCQ6GaCiUmXx0fOXq"
   }
 ]

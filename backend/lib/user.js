@@ -44,6 +44,7 @@ export async function createUser(newUser) {
 }
 
 
+
 // 사용자 생성 테스트
 await createUser({
   name: '박윤경',
@@ -51,6 +52,8 @@ await createUser({
   password: 'apple@',
 });
 
-export async function isRegisteredUser() {
-  // 필요하다면 추가 구현
+export async function isRegisteredUser(email, password) {
+  const user = await findUserByEmail(email);
+  if (!user) return null;
+  return await bcrypt.compare(password, user.password)
 }
