@@ -1,7 +1,7 @@
-import Playground from './playground';
+import ReactForm from './playground';
 
 function App() {
-  return <Playground />;
+  return <ReactForm />;
 }
 
 export default App;

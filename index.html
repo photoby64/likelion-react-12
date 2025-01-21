@@ -36,23 +36,15 @@
     <div id="root"></div>
 
     <div
-      class="hidden"
+      class="html-form-demo"
       hidden
     >
       <section style="margin-inline: 48px">
-        <h2>로그인 폼</h2>
+        <h2>로그인 폼 (POST 메서드)</h2>
         <form
-          action="http://localhost:4000/api/signup"
+          action="http://localhost:4000/api/signin"
           method="POST"
         >
-          <div style="margin-block-end: 8px">
-            <label for="usernameSignIn">이름</label>
-            <input
-              type="text"
-              name="username"
-              id="usernameSignIn"
-            />
-          </div>
           <div style="margin-block-end: 8px">
             <label for="userEmailSignIn">이메일</label>
             <input
@@ -69,20 +61,17 @@
               id="userPasswordSignIn"
             />
           </div>
-
-          <button type="submit">회원가입</button>
+          <button type="submit">로그인</button>
           <button type="reset">초기화</button>
         </form>
       </section>
-
       <hr style="margin-block-start: 32px;" />
-
       <section style="margin-inline: 48px">
-        <h2>회원가입 폼</h2>
+        <h2>회원가입 폼 (POST 메서드)</h2>
         <form
           action="http://localhost:4000/api/signup"
-          method="POST"
           enctype="multipart/form-data"
+          method="POST"
         >
           <div style="margin-block-end: 8px">
             <label for="usernameSignUp">이름</label>
@@ -108,27 +97,24 @@
               id="userPasswordSignUp"
             />
           </div>
-
           <div style="margin-block-end: 8px">
             <label for="userProfileSignUp">프로필 이미지</label>
             <input
               type="file"
               name="userprofile"
               id="userProfileSignUp"
-              accept=".jpg,.jpeg,.png,.svg,.HEIC,.webp"
+              accept=".jpg,.jpeg,.png,.svg,.webp"
             />
           </div>
-
           <button type="submit">회원가입</button>
           <button type="reset">초기화</button>
         </form>
       </section>
-
       <hr style="margin-block-start: 32px;" />
-
       <section style="margin-inline: 48px">
         <h2>
-          <abbr title="Hyper Text Markup Language">HTML</abbr> Form 컨트롤 (GET
+          헬로!~ <abbr title="Hyper Text Markup Language">HTML</abbr> Form 컨트롤
+          (GET
           메서드)
         </h2>
         <form action="http://localhost:4000/api/hello">
