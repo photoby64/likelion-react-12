@@ -1,7 +1,37 @@
+import { createUser } from './lib/user.js';
 import express from 'express';
+
+
 
 // Express {}
 const app = express();
+app.use(express.urlencoded({extended:false}));
+
+app.post('/api/signup', async (request, response) => {
+  const { username, useremail, userpassword } = request.body;
+
+  if (!username || !useremail || !userpassword) {
+    return response.status(400).send(`
+      <p>회원 가입을 위해 이름, 이메일, 패스워드를 모두 입력해야 합니다.</p>  
+    `);
+  }
+  
+  try {
+    const newUser = await createUser({
+      name: username,
+      email: useremail,
+      password: userpassword,
+    });
+
+    if (newUser) {
+      response.status(200).send(`<p>회원가입 되었습니다. 😃</p>`);
+    } else {
+      response.status(400).send(`<p>이미 가입된 이메일입니다. 😥</p>`);
+    }
+  } catch (error) {
+    response.status(400).send(error);
+  }
+});
 
 // 라우팅(Routing)
 app.get('/api/hello', (request, response) => {
