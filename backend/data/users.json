@@ -1,5 +1,5 @@
 [
-	{
+  {
     "name": "한제이",
     "email": "hanj2@kakao.com",
     "password": "$2b$10$K7PvRTiwF3xH5h9R.2IZoOrM54q5fkxlHJiQuTSvRz5vm7O99lxrO",
@@ -10,5 +10,17 @@
     "email": "yamoo9@naver.com",
     "password": "$2b$10$6dHtQ34rZC5yWbm9YQOiU.hI9Ek0MrUzlrt0cD9XlSVVHHvUvQbLi",
     "id": "17c7075e-0cb6-42e8-9d02-156aab3a4935"
+  },
+  {
+    "id": "99880847-107d-4078-85b3-3662bae98161",
+    "name": "박윤경",
+    "email": "photoby64@naver.com",
+    "password": "$2b$09$JdTjBuJcuiz2lDR5SA9yQ.V3EVtORZH3YhKHebULA3apMtAQ7Yjvi"
+  },
+  {
+    "id": "b986dfa5-f03b-4df8-95f3-fa971da1c0dc",
+    "name": "아이폰",
+    "email": "apple@gmail.com",
+    "password": "$2b$09$SUdo8ddsK5eOFSneQdgxFOM9wKnPsWJgLTvzXtPJnIch9hAg40kwC"
   }
 ]
