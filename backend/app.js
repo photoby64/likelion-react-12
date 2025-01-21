@@ -1,5 +1,6 @@
-import { createUser } from './lib/user.js';
+import bcrypt from 'bcrypt';
 import express from 'express';
+import { createUser } from './lib/user.js';
 
 
 

@@ -1,0 +1,14 @@
+[
+	{
+    "name": "한제이",
+    "email": "hanj2@kakao.com",
+    "password": "$2b$10$K7PvRTiwF3xH5h9R.2IZoOrM54q5fkxlHJiQuTSvRz5vm7O99lxrO",
+    "id": "591c1b02-c690-4348-8dcc-a0c1fb693edf"
+  },
+  {
+    "name": "지훈",
+    "email": "yamoo9@naver.com",
+    "password": "$2b$10$6dHtQ34rZC5yWbm9YQOiU.hI9Ek0MrUzlrt0cD9XlSVVHHvUvQbLi",
+    "id": "17c7075e-0cb6-42e8-9d02-156aab3a4935"
+  }
+]
