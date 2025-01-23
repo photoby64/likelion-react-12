@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import FormInput from '@/components/form-input';
-import FormRadio from '@/components/form-radio';
 
 const formStyles = {
   display: 'flex',
@@ -13,18 +12,81 @@ function ReactForm() {
   const [age, setAge] = useState<number>(22);
   const [color, setColor] = useState<string>('#2483DB');
   const [limitAge, setLimitAge] = useState<number>(40);
-  const [profileImage, setProfileImage] = useState<string[]>([]);
+
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const handleUploadProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = e;
+
+    if (target.files && target.files.length > 0) {
+      const file = target.files.item(0);
+      if (file) {
+        setProfileImage(URL.createObjectURL(file));
+      }
+    }
+  };
+
+  // 컴포넌트 상태 변수 (state variable: 컴포넌트 외부의 상태 관리 시스템 기억)
+  const [photos, setPhotos] = useState<File[]>([]);
+
+  // 파생된 상태 변수 (derived state variable)
+  const photoURLs = photos.map((photo) => URL.createObjectURL(photo));
+
+  // 상태 업데이트 핸들러 (이벤트 감지되면 실행)
+  const handleUploadPhotos = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (fileList) {
+      setPhotos(Object.values(fileList)); // [File, File, ...]
+    }
+  };
 
   return (
     <div className="ReactForm">
       <h2>React 폼(form)</h2>
       <form style={formStyles}>
+        <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
+          <FormInput
+            type="file"
+            label="포토"
+            accept=".jpg, .jpeg, .png"
+            multiple
+            onChange={handleUploadPhotos}
+          />
+          {photos.length > 0
+            ? photos.map(({ name }, index) => (
+                <img
+                  key={name}
+                  style={{ marginBlockStart: 8 }}
+                  src={photoURLs.at(index)}
+                  alt={name}
+                  width={68}
+                  height={68}
+                />
+              ))
+            : null}
+        </div>
+
+        {/* type=file (1) */}
+        <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
+          <FormInput
+            type="file"
+            label="프로필"
+            accept="image/*"
+            onChange={handleUploadProfile}
+          />
+          {profileImage && (
+            <img
+              style={{ marginBlockStart: 8 }}
+              src={profileImage}
+              alt="업로드 할 프로필"
+              width={100}
+              height={100}
+            />
+          )}
+        </div>
+
         {/* type=text */}
-        <FormInput
-          // type="text"
-          label="이름"
-          placeholder="박수무당"
-        />
+        <FormInput label="이름" placeholder="박수무당" />
 
         {/* type=password */}
         <FormInput
@@ -78,110 +140,57 @@ function ReactForm() {
           <output>{limitAge}</output>
         </div>
 
-        {/* type=file */}
-        {/* 프로필 */}
-        <div>
-          <FormInput
-            label="프로필"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={(e) => {
-              const { files } = e.target;
-              if (files && files.length > 0) {
-                const profileImagePaths = Array.from(files).map((file) =>
-                  URL.createObjectURL(file)
-                );
-                setProfileImage(profileImagePaths);
-              }
-            }}
-          />
-          {profileImage && profileImage.length > 0 && (
-            <div>
-              {profileImage.map((imagePath, index) => (
-                <img
-                  key={index}
-                  src={imagePath}
-                  alt={`업로드할 프로필 ${index + 1}`}
-                  width={100}
-                  height={100}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-
-
-        {/* 포토 */}
-        <div>
-          <FormInput
-            label="포토"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={(e) => {
-              const { files } = e.target;
-              if (files && files.length > 0) {
-                const profileImagePaths = Array.from(files).map((file) =>
-                  URL.createObjectURL(file)
-                );
-                setProfileImage(profileImagePaths);
-              }
-            }}
-          />
-          {profileImage && profileImage.length > 0 && (
-            <div>
-              {profileImage.map((imagePath, index) => (
-                <img
-                  key={index}
-                  src={imagePath}
-                  alt={`업로드할 프로필 ${index + 1}`}
-                  width={100}
-                  height={100}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-
-
-
-        
-
         {/* type=radio */}
         <fieldset>
           <legend>성별</legend>
-          <FormRadio
+          <FormInput
+            type="radio"
             label="남성"
-            value="남성"
             name="usergender"
+            value="male"
             defaultChecked
           />
-          <FormRadio label="여성" value="여성" name="usergender" />
+          <FormInput
+            type="radio"
+            label="여성"
+            name="usergender"
+            value="female"
+          />
         </fieldset>
 
         {/* type=checkbox */}
-        <FormInput
-          label="야구"
-          value="체크박스"
-          type="checkbox"
-          name="checkbox"
-        />
-        <FormInput
-          label="골프"
-          value="체크박스"
-          type="checkbox"
-          name="checkbox"
-        />
+        <fieldset>
+          <legend>취미</legend>
+          <FormInput
+            type="checkbox"
+            label="공부"
+            name="userhobby"
+            value="study"
+            defaultChecked
+          />
+          <FormInput
+            type="checkbox"
+            label="운동"
+            name="userhobby"
+            value="helth"
+          />
+          <FormInput
+            type="checkbox"
+            label="영화 감상"
+            name="userhobby"
+            value="watch-a-movie"
+          />
+        </fieldset>
 
         {/* type=date */}
-        <FormInput label="여행날짜" type="date" name="" />
+        <FormInput type="date" label="여행 날짜" />
 
         {/* type=datetime-local */}
+        <FormInput type="datetime-local" label="비행기 출국 시간" />
 
         <button type="submit">제출</button>
+        <button type="reset">초기화</button>
+        {/* <input type="reset" value="초기화" /> */}
       </form>
     </div>
   );
