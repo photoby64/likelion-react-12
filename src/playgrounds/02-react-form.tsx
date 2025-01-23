@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import FormInput from '@/components/form-input';
 
 function ReactForm() {
+  const [age, setAge] = useState(22);
+
   return (
     <div className="ReactForm">
       <h2>React 폼(form)</h2>
@@ -14,11 +17,16 @@ function ReactForm() {
         <FormInput
           type="number"
           label="나이"
-          defaultValue={20}
+          value={age}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const { value } = e.target;
+            const nextAgeValue: number = parseInt(value, 10);
+            setAge(nextAgeValue);
+          }}
+          readOnly={false}
           data-name="폼 인풋"
           data-type="input"
           title="컴포넌트 만세!"
-          v-for="data in list"
         />
         <FormInput type="color" label="색상" />
         <FormInput type="range" label="시청 허용 나이" />
