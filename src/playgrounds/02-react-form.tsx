@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FormInput from '@/components/form-input';
+import FormTextArea from '@/components/form-textarea';
 
 const formStyles = {
   display: 'flex',
@@ -41,70 +42,125 @@ function ReactForm() {
   };
 
   const [contents, setContents] = useState<string>(
-    '사랑하는 사람에게 전하는 메시지를 남겨주세요~'
+    '모든 사람들에게 전할 메시지를 남겨주세요~'
   );
 
   const handleUpdateContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value);
   };
 
+  // radio input state (checked)
+  const [isFemale, setIsFemale] = useState<boolean>(true);
+  const handleToggleGender = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isFemale = e.target.value === 'female';
+    setIsFemale(isFemale);
+  };
+
+  // checkbox input state (checked)
+  // 배열
+  // Checkbox { id?, name, label, value, checked }
+  // Checkbox[]
+  const [hobbyList, setHobbyList] = useState([
+    {
+      name: 'userhobby',
+      label: '공부',
+      value: 'study',
+      checked: true,
+    },
+    {
+      name: 'userhobby',
+      label: '영화 감상',
+      value: 'watch-a-movie',
+      checked: false,
+    },
+    {
+      name: 'userhobby',
+      label: '운동',
+      value: 'helth',
+      checked: false,
+    },
+    {
+      name: 'userhobby',
+      label: '바디 프로필 촬영',
+      value: 'photo-body-profile',
+      checked: true,
+    },
+  ]);
+
+  // derived state
+  // - 모두 체크 되었나?
+  const isAllCheckedHobbyList = hobbyList.every((hobby) => hobby.checked);
+  console.log({ isAllCheckedHobbyList });
+  // - 모두 체크 안되었나?
+  const isNotAllCheckedHobbyList = hobbyList.every((hobby) => !hobby.checked);
+  console.log({ isNotAllCheckedHobbyList });
+
+  const handleCheckedHobbies = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked: nextCheckedValue } = e.target;
+
+    const nextHobbyList = hobbyList.map((hobby) => {
+      if (hobby.value === value) {
+        return {
+          ...hobby,
+          checked: nextCheckedValue,
+        };
+      } else {
+        return hobby;
+      }
+    });
+
+    setHobbyList(nextHobbyList);
+  };
+
   return (
     <div className="ReactForm">
       <h2>React 폼(form)</h2>
+
       <form style={formStyles}>
-        <div style={{ display: 'flex', flexFlow: 'column', gap: 4 }}>
-          <label htmlFor="greeting-message">인사말</label>
-          <textarea
-            id="greeting-message"
-            name="contents"
-            cols={60}
-            rows={4}
-            value={contents}
-            onChange={handleUpdateContents}
-            style={{ resize: 'vertical' }}
-          />
-        </div>
-
-        <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
-          <FormInput
-            type="file"
-            label="포토"
-            accept=".jpg, .jpeg, .png"
-            multiple
-            onChange={handleUploadPhotos}
-          />
-          {photos.length > 0
-            ? photos.map(({ name }, index) => (
-                <img
-                  key={name}
-                  style={{ marginBlockStart: 8 }}
-                  src={photoURLs.at(index)}
-                  alt={name}
-                  width={68}
-                  height={68}
-                />
-              ))
-            : null}
-        </div>
-
-        {/* type=file (1) */}
-        <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
-          <FormInput
-            type="file"
-            label="프로필"
-            accept="image/*"
-            onChange={handleUploadProfile}
-          />
-          {profileImage && (
-            <img
-              style={{ marginBlockStart: 8 }}
-              src={profileImage}
-              alt="업로드 할 프로필"
-              width={100}
-              height={100}
+        {/* type=radio */}
+        <fieldset>
+          <legend>성별</legend>
+          <div
+            style={{
+              display: 'flex',
+              gap: 12,
+              justifyContent: 'space-between',
+            }}
+          >
+            <FormInput
+              type="radio"
+              label="여성"
+              name="usergender"
+              value="female"
+              checked={isFemale}
+              onChange={handleToggleGender}
             />
-          )}
-        </div>
+            <FormInput
+              type="radio"
+              label="남성"
+              name="usergender"
+              value="male"
+              checked={!isFemale}
+              onChange={handleToggleGender}
+            />
+          </div>
+        </fieldset>
+
+        {/* type=checkbox */}
+        <fieldset>
+          <legend>취미</legend>
+          {hobbyList.map((hobby) => (
+            <FormInput
+              key={hobby.label}
+              type="checkbox"
+              label={hobby.label}
+              name={hobby.name}
+              value={hobby.value}
+              checked={hobby.checked}
+              onChange={handleCheckedHobbies}
+            />
+          ))}
+        </fieldset>
 
         {/* type=text */}
         <FormInput label="이름" placeholder="박수무당" />
@@ -161,57 +217,72 @@ function ReactForm() {
           <output>{limitAge}</output>
         </div>
 
-        {/* type=radio */}
-        <fieldset>
-          <legend>성별</legend>
-          <FormInput
-            type="radio"
-            label="남성"
-            name="usergender"
-            value="male"
-            defaultChecked
-          />
-          <FormInput
-            type="radio"
-            label="여성"
-            name="usergender"
-            value="female"
-          />
-        </fieldset>
-
-        {/* type=checkbox */}
-        <fieldset>
-          <legend>취미</legend>
-          <FormInput
-            type="checkbox"
-            label="공부"
-            name="userhobby"
-            value="study"
-            defaultChecked
-          />
-          <FormInput
-            type="checkbox"
-            label="운동"
-            name="userhobby"
-            value="helth"
-          />
-          <FormInput
-            type="checkbox"
-            label="영화 감상"
-            name="userhobby"
-            value="watch-a-movie"
-          />
-        </fieldset>
-
         {/* type=date */}
         <FormInput type="date" label="여행 날짜" />
 
         {/* type=datetime-local */}
         <FormInput type="datetime-local" label="비행기 출국 시간" />
 
-        <button type="submit">제출</button>
-        <button type="reset">초기화</button>
-        {/* <input type="reset" value="초기화" /> */}
+        <FormTextArea
+          label="인사말"
+          name="contents"
+          value={contents}
+          onChange={handleUpdateContents}
+          resize="vertical"
+        />
+        <FormTextArea
+          label="프로포즈"
+          name="propose"
+          defaultValue="propose"
+          resize="horizontal"
+        />
+
+        {/* type=file (1) */}
+        <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
+          <FormInput
+            type="file"
+            label="프로필"
+            accept="image/*"
+            onChange={handleUploadProfile}
+          />
+          {profileImage && (
+            <img
+              style={{ marginBlockStart: 8 }}
+              src={profileImage}
+              alt="업로드 할 프로필"
+              width={100}
+              height={100}
+            />
+          )}
+        </div>
+
+        {/* type=file (N) */}
+        <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
+          <FormInput
+            type="file"
+            label="포토"
+            accept=".jpg, .jpeg, .png"
+            multiple
+            onChange={handleUploadPhotos}
+          />
+          {photos.length > 0
+            ? photos.map(({ name }, index) => (
+                <img
+                  key={name}
+                  style={{ marginBlockStart: 8 }}
+                  src={photoURLs.at(index)}
+                  alt={name}
+                  width={68}
+                  height={68}
+                />
+              ))
+            : null}
+        </div>
+
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button type="submit">제출</button>
+          <button type="reset">초기화</button>
+        </div>
       </form>
     </div>
   );
