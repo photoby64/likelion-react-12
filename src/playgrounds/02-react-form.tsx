@@ -13,6 +13,7 @@ function ReactForm() {
   const [age, setAge] = useState<number>(22);
   const [color, setColor] = useState<string>('#2483DB');
   const [limitAge, setLimitAge] = useState<number>(40);
+  const [profileImage, setProfileImage] = useState<string[]>([]);
 
   return (
     <div className="ReactForm">
@@ -78,7 +79,76 @@ function ReactForm() {
         </div>
 
         {/* type=file */}
-        <FormInput label="프로필" type="file" accept="image/*" multiple />
+        {/* 프로필 */}
+        <div>
+          <FormInput
+            label="프로필"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              const { files } = e.target;
+              if (files && files.length > 0) {
+                const profileImagePaths = Array.from(files).map((file) =>
+                  URL.createObjectURL(file)
+                );
+                setProfileImage(profileImagePaths);
+              }
+            }}
+          />
+          {profileImage && profileImage.length > 0 && (
+            <div>
+              {profileImage.map((imagePath, index) => (
+                <img
+                  key={index}
+                  src={imagePath}
+                  alt={`업로드할 프로필 ${index + 1}`}
+                  width={100}
+                  height={100}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+
+
+        {/* 포토 */}
+        <div>
+          <FormInput
+            label="포토"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              const { files } = e.target;
+              if (files && files.length > 0) {
+                const profileImagePaths = Array.from(files).map((file) =>
+                  URL.createObjectURL(file)
+                );
+                setProfileImage(profileImagePaths);
+              }
+            }}
+          />
+          {profileImage && profileImage.length > 0 && (
+            <div>
+              {profileImage.map((imagePath, index) => (
+                <img
+                  key={index}
+                  src={imagePath}
+                  alt={`업로드할 프로필 ${index + 1}`}
+                  width={100}
+                  height={100}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+
+
+
+        
 
         {/* type=radio */}
         <fieldset>
@@ -93,8 +163,21 @@ function ReactForm() {
         </fieldset>
 
         {/* type=checkbox */}
+        <FormInput
+          label="야구"
+          value="체크박스"
+          type="checkbox"
+          name="checkbox"
+        />
+        <FormInput
+          label="골프"
+          value="체크박스"
+          type="checkbox"
+          name="checkbox"
+        />
 
         {/* type=date */}
+        <FormInput label="여행날짜" type="date" name="" />
 
         {/* type=datetime-local */}
 
