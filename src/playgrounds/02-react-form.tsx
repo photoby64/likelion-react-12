@@ -40,10 +40,31 @@ function ReactForm() {
     }
   };
 
+  const [contents, setContents] = useState<string>(
+    '사랑하는 사람에게 전하는 메시지를 남겨주세요~'
+  );
+
+  const handleUpdateContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContents(e.target.value);
+  };
+
   return (
     <div className="ReactForm">
       <h2>React 폼(form)</h2>
       <form style={formStyles}>
+        <div style={{ display: 'flex', flexFlow: 'column', gap: 4 }}>
+          <label htmlFor="greeting-message">인사말</label>
+          <textarea
+            id="greeting-message"
+            name="contents"
+            cols={60}
+            rows={4}
+            value={contents}
+            onChange={handleUpdateContents}
+            style={{ resize: 'vertical' }}
+          />
+        </div>
+
         <div style={{ padding: 12, border: '0.5px solid rgba(0 0 0 / 30%)' }}>
           <FormInput
             type="file"
