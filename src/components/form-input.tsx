@@ -1,19 +1,10 @@
 import { useId, type ComponentProps } from 'react';
 
-// interface FormInputProps extends ComponentProps<'input'> {
-//   label: string;
-// }
-
-// type FormInputProps = ComponentProps<'input'> & {
-//   label: string;
-// };
-
-function FormInput({
-  label,
-  ...restProps
-}: ComponentProps<'input'> & {
+type FormInputProps = ComponentProps<'input'> & {
   label: string;
-}) {
+};
+
+function FormInput({ label, ...restProps }: FormInputProps) {
   const inputId = useId();
 
   return (

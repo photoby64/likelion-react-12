@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FormInput from '@/components/form-input';
+import FormRadio from '@/components/form-radio';
 
 const formStyles = {
   display: 'flex',
@@ -41,6 +42,8 @@ function ReactForm() {
           value={age}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             const { value } = e.target;
+            // const nextAgeValue: number = +value;
+            // const nextAgeValue: number = Number(value);
             const nextAgeValue: number = parseInt(value, 10);
             setAge(nextAgeValue);
           }}
@@ -73,6 +76,27 @@ function ReactForm() {
           />
           <output>{limitAge}</output>
         </div>
+
+        {/* type=file */}
+        <FormInput label="프로필" type="file" accept="image/*" multiple />
+
+        {/* type=radio */}
+        <fieldset>
+          <legend>성별</legend>
+          <FormRadio
+            label="남성"
+            value="남성"
+            name="usergender"
+            defaultChecked
+          />
+          <FormRadio label="여성" value="여성" name="usergender" />
+        </fieldset>
+
+        {/* type=checkbox */}
+
+        {/* type=date */}
+
+        {/* type=datetime-local */}
 
         <button type="submit">제출</button>
       </form>
