@@ -2,65 +2,11 @@ import { useState } from 'react';
 import FormInput from '@/components/form-input';
 import FormTextArea from '@/components/form-textarea';
 
-const formStyles = {
-  display: 'flex',
-  flexFlow: 'column',
-  alignItems: 'start',
-  gap: 20,
-};
-
-function ReactForm() {
-  const [age, setAge] = useState<number>(22);
-  const [color, setColor] = useState<string>('#2483DB');
-  const [limitAge, setLimitAge] = useState<number>(40);
-
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-
-  const handleUploadProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { target } = e;
-
-    if (target.files && target.files.length > 0) {
-      const file = target.files.item(0);
-      if (file) {
-        setProfileImage(URL.createObjectURL(file));
-      }
-    }
-  };
-
-  // 컴포넌트 상태 변수 (state variable: 컴포넌트 외부의 상태 관리 시스템 기억)
-  const [photos, setPhotos] = useState<File[]>([]);
-
-  // 파생된 상태 변수 (derived state variable)
-  const photoURLs = photos.map((photo) => URL.createObjectURL(photo));
-
-  // 상태 업데이트 핸들러 (이벤트 감지되면 실행)
-  const handleUploadPhotos = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
-    if (fileList) {
-      setPhotos(Object.values(fileList)); // [File, File, ...]
-    }
-  };
-
-  const [contents, setContents] = useState<string>(
-    '모든 사람들에게 전할 메시지를 남겨주세요~'
-  );
-
-  const handleUpdateContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(e.target.value);
-  };
-
-  // radio input state (checked)
-  const [isFemale, setIsFemale] = useState<boolean>(true);
-  const handleToggleGender = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isFemale = e.target.value === 'female';
-    setIsFemale(isFemale);
-  };
-
-  // checkbox input state (checked)
-  // 배열
-  // Checkbox { id?, name, label, value, checked }
-  // Checkbox[]
-  const [hobbyList, setHobbyList] = useState([
+const initialFormData = {
+  limitAge: 40,
+  profileImage: null,
+  photos: [],
+  hobbies: [
     {
       name: 'userhobby',
       label: '공부',
@@ -85,7 +31,55 @@ function ReactForm() {
       value: 'photo-body-profile',
       checked: true,
     },
-  ]);
+  ],
+};
+
+function ReactForm() {
+  // 현재 관리되는 폼 데이터 상태: limitAge, profileImage, photos, hobbyList
+
+  const handleResetForm = () => {
+    setLimitAge(initialFormData.limitAge);
+    setProfileImage(initialFormData.profileImage);
+    setPhotos(initialFormData.photos);
+    setHobbyList(initialFormData.hobbies);
+  };
+
+  const [limitAge, setLimitAge] = useState<number>(initialFormData.limitAge);
+
+  const [profileImage, setProfileImage] = useState<string | null>(
+    initialFormData.profileImage
+  );
+
+  const handleUploadProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = e;
+
+    if (target.files && target.files.length > 0) {
+      const file = target.files.item(0);
+      if (file) {
+        setProfileImage(URL.createObjectURL(file));
+      }
+    }
+  };
+
+  // 컴포넌트 상태 변수 (state variable: 컴포넌트 외부의 상태 관리 시스템 기억)
+  const [photos, setPhotos] = useState<File[]>(initialFormData.photos);
+
+  // 파생된 상태 변수 (derived state variable)
+  const photoURLs = photos.map((photo) => URL.createObjectURL(photo));
+
+  // 상태 업데이트 핸들러 (이벤트 감지되면 실행)
+  const handleUploadPhotos = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (fileList) {
+      setPhotos(Object.values(fileList)); // [File, File, ...]
+    }
+  };
+
+  // checkbox input state (checked)
+  // 배열
+  // Checkbox { id?, name, label, value, checked }
+  // Checkbox[]
+  const [hobbyList, setHobbyList] = useState(initialFormData.hobbies);
 
   // derived state
   // - 모두 체크 되었나?
@@ -132,16 +126,13 @@ function ReactForm() {
               label="여성"
               name="usergender"
               value="female"
-              checked={isFemale}
-              onChange={handleToggleGender}
+              defaultChecked
             />
             <FormInput
               type="radio"
               label="남성"
               name="usergender"
               value="male"
-              checked={!isFemale}
-              onChange={handleToggleGender}
             />
           </div>
         </fieldset>
@@ -176,29 +167,10 @@ function ReactForm() {
         <FormInput type="email" label="이메일" placeholder="user@company.io" />
 
         {/* type=number, controlled component */}
-        <FormInput
-          type="number"
-          label="나이"
-          value={age}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            const { value } = e.target;
-            // const nextAgeValue: number = +value;
-            // const nextAgeValue: number = Number(value);
-            const nextAgeValue: number = parseInt(value, 10);
-            setAge(nextAgeValue);
-          }}
-        />
+        <FormInput type="number" label="나이" defaultValue={24} />
 
         {/* type=color */}
-        <FormInput
-          type="color"
-          label="색상"
-          value={color}
-          onChange={(e) => {
-            const { value } = e.target;
-            setColor(value);
-          }}
-        />
+        <FormInput type="color" label="색상" defaultValue="#ffffff" />
 
         {/* type=range */}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -226,14 +198,13 @@ function ReactForm() {
         <FormTextArea
           label="인사말"
           name="contents"
-          value={contents}
-          onChange={handleUpdateContents}
+          placeholder="사랑하는 이들에게 따뜻한 말을 전해주세요~"
           resize="vertical"
         />
         <FormTextArea
           label="프로포즈"
           name="propose"
-          defaultValue="propose"
+          placeholder="아름답고 서정적인 대화로 마음을 훔치세요~"
           resize="horizontal"
         />
 
@@ -281,7 +252,9 @@ function ReactForm() {
 
         <div style={{ display: 'flex', gap: 8 }}>
           <button type="submit">제출</button>
-          <button type="reset">초기화</button>
+          <button type="reset" onClick={handleResetForm}>
+            초기화
+          </button>
         </div>
       </form>
     </div>
@@ -289,3 +262,10 @@ function ReactForm() {
 }
 
 export default ReactForm;
+
+const formStyles = {
+  display: 'flex',
+  flexFlow: 'column',
+  alignItems: 'start',
+  gap: 20,
+};
