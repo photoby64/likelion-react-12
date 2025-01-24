@@ -1,7 +1,7 @@
-import ReactForm from './playground';
+import SignUpForm from './playground';
 
 function App() {
-  return <ReactForm />;
+  return <SignUpForm />;
 }
 
 export default App;
