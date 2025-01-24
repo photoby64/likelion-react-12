@@ -1,7 +1,7 @@
-import SignUpForm from './playground';
+import Playground from './playground';
 
 function App() {
-  return <SignUpForm />;
+  return <Playground />;
 }
 
 export default App;
