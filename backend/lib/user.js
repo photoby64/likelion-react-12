@@ -33,6 +33,7 @@ export async function createUser(newUser) {
     id: crypto.randomUUID(),
     name: newUser.name,
     email: newUser.email,
+    profileImage: newUser.profileImage,
     password: hashedPassword,
   };
 
@@ -43,17 +44,8 @@ export async function createUser(newUser) {
   return createdUser;
 }
 
-
-
-// 사용자 생성 테스트
-await createUser({
-  name: '박윤경',
-  email: 'photoby64@naver.com',
-  password: 'apple@',
-});
-
 export async function isRegisteredUser(email, password) {
   const user = await findUserByEmail(email);
   if (!user) return null;
-  return await bcrypt.compare(password, user.password)
+  return await bcrypt.compare(password, user.password);
 }
