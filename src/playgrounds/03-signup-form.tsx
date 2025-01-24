@@ -1,55 +1,74 @@
+import { useState } from 'react';
+
+interface ResponseDataType {
+  id: string;
+  name: string;
+  email: string;
+  profileImage: string;
+  message?: string;
+}
+
 function SignUpForm() {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    // 브라우저 기본 작동 중지
-    e.preventDefault();
+  const [responseData, setResponseData] = useState<null | ResponseDataType>(
+    null
+  );
 
-    // 폼 데이터 구하기
+  // const [error, setError] = useState<null | Error>(null);
 
-    const formData = new FormData(e.currentTarget); // FormData
-    // const formDataObject = Object.fromEntries(formData); // Object
-
-    // 서버에 요청
-    // Fetch API `fetch()` or Axios Library `axios.post()`
-
-    // Promise API
-    // fetch('http://localhost:4000/api/signup', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    //   body: formData,
-    // })
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.error(error));
-
-    // Async Await
+  const handleSubmitAction = async (formData: FormData) => {
     try {
       const response = await fetch('http://localhost:4000/api/signup', {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
-
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+      const jsonData = await response.json();
+      setResponseData(jsonData as ResponseDataType);
+    } catch {
+      // setError(error as Error);
     }
-
-    // 서버에서 응답
-
-    // UI에 반영
   };
 
+  // 조건부 렌더링
+  // 오류가 발생한 경우 오류 메시지 출력 (UI 화면)
+  // if (error) {
+  //   return (
+  //     <div role="alert">
+  //       <h2>{error.name}</h2>
+  //       <p>{error.message}</p>
+  //     </div>
+  //   );
+  // }
+
+  // 회원가입 이후 가입 사용자 정보 (UI 화면)
+  if (responseData) {
+    return (
+      <article className="UserProfile" id={responseData.id}>
+        <h2 className="UserProfile--name">{responseData.name}</h2>
+        {!responseData.message ? (
+          <>
+            <img
+              src={`http://localhost:4000${responseData.profileImage}`}
+              alt=""
+              width={64}
+              height={64}
+            />
+            <p>{responseData.email}</p>
+          </>
+        ) : (
+          <p>{responseData.message}</p>
+        )}
+      </article>
+    );
+  }
+
+  // 회원가입 폼 (UI 화면)
   return (
     <section style={{ marginInline: 48 }}>
-      <h2>회원가입 폼 (POST 메서드)</h2>
+      <h2>회원가입 폼</h2>
       <form
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onSubmit={handleSubmit}
-        // action="http://localhost:4000/api/signup"
-        // encType="multipart/form-data"
-        // method="POST"
+        // onSubmit={handleSubmitPromise}
+        action={handleSubmitAction}
       >
         <div style={{ marginBlockEnd: 8 }}>
           <label htmlFor="usernameSignUp">이름</label>

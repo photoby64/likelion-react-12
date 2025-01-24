@@ -1,44 +1,9 @@
 [
   {
-    "name": "한제이",
-    "email": "hanj2@kakao.com",
-    "password": "$2b$10$K7PvRTiwF3xH5h9R.2IZoOrM54q5fkxlHJiQuTSvRz5vm7O99lxrO",
-    "id": "591c1b02-c690-4348-8dcc-a0c1fb693edf"
-  },
-  {
-    "name": "지훈",
-    "email": "yamoo9@naver.com",
-    "password": "$2b$10$6dHtQ34rZC5yWbm9YQOiU.hI9Ek0MrUzlrt0cD9XlSVVHHvUvQbLi",
-    "id": "17c7075e-0cb6-42e8-9d02-156aab3a4935"
-  },
-  {
-    "id": "99880847-107d-4078-85b3-3662bae98161",
-    "name": "박윤경",
-    "email": "photoby64@naver.com",
-    "password": "$2b$09$JdTjBuJcuiz2lDR5SA9yQ.V3EVtORZH3YhKHebULA3apMtAQ7Yjvi"
-  },
-  {
-    "id": "b986dfa5-f03b-4df8-95f3-fa971da1c0dc",
-    "name": "아이폰",
-    "email": "apple@gmail.com",
-    "password": "$2b$09$SUdo8ddsK5eOFSneQdgxFOM9wKnPsWJgLTvzXtPJnIch9hAg40kwC"
-  },
-  {
-    "id": "4c446e28-a0ff-47ef-ba08-5309a485035e",
-    "name": "이승협",
-    "email": "lee@naver.com",
-    "password": "$2b$09$fyLuXbfy5b/y67wBKdUYFOPzqCdq2QRjCaVJaCQ6GaCiUmXx0fOXq"
-  },
-  {
-    "id": "7ce319f4-c872-4e16-a0f9-6e465eaefbea",
-    "name": "박윤경",
-    "email": "lazzyoff64@gmail.com",
-    "password": "$2b$09$Nis.DbjWesD9hguJvYfgtes9D31xSTE6EYI4.jfEu8mrpQo.NW51i"
-  },
-  {
-    "id": "ef1583d6-1c47-4f3e-baa6-028a97c7a9fb",
-    "name": "바나클",
-    "email": "ba@naver.com",
-    "password": "$2b$09$NvkvOJu8REq.Ja.460OYPel930aIcC1d2fe2eZaDHCrB1yQh76vma"
+    "id": "4ac8c72f-d550-499d-9299-632966bde9de",
+    "name": "범쌤",
+    "email": "beom@gmail.com",
+    "profileImage": "/files/beom.png",
+    "password": "$2b$09$lxVg4Cy4f304X1VPMraGveZquOyElXyGkcJ6bBh3mP91T4xgAmOhu"
   }
 ]
