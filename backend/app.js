@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import { resolve } from 'node:path';
 import fileUpload from 'express-fileupload';
@@ -7,6 +8,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(resolve('./public')));
 app.use(fileUpload());
+app.use(cors());
 
 app.post('/api/signin', async (request, response) => {
   const { useremail, userpassword } = request.body;

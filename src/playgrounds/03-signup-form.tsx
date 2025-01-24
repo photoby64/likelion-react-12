@@ -1,13 +1,40 @@
 function SignUpForm() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // 브라우저 기본 작동 중지
     e.preventDefault();
 
     // 폼 데이터 구하기
-    const formData = Object.fromEntries(new FormData(e.currentTarget));
-    console.log(formData);
+
+    const formData = new FormData(e.currentTarget); // FormData
+    // const formDataObject = Object.fromEntries(formData); // Object
 
     // 서버에 요청
+    // Fetch API `fetch()` or Axios Library `axios.post()`
+
+    // Promise API
+    // fetch('http://localhost:4000/api/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    //   body: formData,
+    // })
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.error(error));
+
+    // Async Await
+    try {
+      const response = await fetch('http://localhost:4000/api/signup', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
 
     // 서버에서 응답
 
@@ -18,6 +45,7 @@ function SignUpForm() {
     <section style={{ marginInline: 48 }}>
       <h2>회원가입 폼 (POST 메서드)</h2>
       <form
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={handleSubmit}
         // action="http://localhost:4000/api/signup"
         // encType="multipart/form-data"

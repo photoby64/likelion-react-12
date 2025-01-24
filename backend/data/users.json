@@ -28,5 +28,17 @@
     "name": "이승협",
     "email": "lee@naver.com",
     "password": "$2b$09$fyLuXbfy5b/y67wBKdUYFOPzqCdq2QRjCaVJaCQ6GaCiUmXx0fOXq"
+  },
+  {
+    "id": "7ce319f4-c872-4e16-a0f9-6e465eaefbea",
+    "name": "박윤경",
+    "email": "lazzyoff64@gmail.com",
+    "password": "$2b$09$Nis.DbjWesD9hguJvYfgtes9D31xSTE6EYI4.jfEu8mrpQo.NW51i"
+  },
+  {
+    "id": "ef1583d6-1c47-4f3e-baa6-028a97c7a9fb",
+    "name": "바나클",
+    "email": "ba@naver.com",
+    "password": "$2b$09$NvkvOJu8REq.Ja.460OYPel930aIcC1d2fe2eZaDHCrB1yQh76vma"
   }
 ]
