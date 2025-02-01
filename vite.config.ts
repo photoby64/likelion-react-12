@@ -18,6 +18,9 @@ const viteConfig = defineConfig({
   },
   css: {
     devSourcemap: true,
+    modules: {
+      localsConvention: 'camelCase',
+    },
   },
   resolve: {
     alias: {
